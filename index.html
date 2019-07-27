@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>SwipeDatePicker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/swipe-datepicker.css">
+
+    <script src="js/jquery-2.2.4.min.js"></script>
+    <script src="js/iscroll.js"></script>
+    <script src="js/swipe-datepicker.js"></script>
+
+    <style>
+        .container{
+            padding: 20px;
+        }
+        label{
+            line-height: 1.2rem;
+            padding: 5px 10px;
+        }
+        input#dateTime{
+            -webkit-appearance: none;
+            outline: none;
+            background-color: #EEEEEE;
+            font-size: 1.2rem;
+            border: 1px solid #cccccc;
+            padding: 5px 10px;
+            text-align: center;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+        }
+        input#dateTime:focus {
+
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <label for="dateTime">选择日期和时间</label>
+    <input type="text" id="dateTime" readonly>
+</div>
+
+<script>
+
+    $('#dateTime').date({
+        theme: 'datetime'
+    }, (dateString)=>{
+        $('#dateTime').val(dateString)
+    },()=>{})
+</script>
+
+</body>
+</html>
