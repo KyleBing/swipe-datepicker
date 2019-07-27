@@ -15,7 +15,7 @@ online example: [Swipe Datetime Picker](http://kylebing.cn/lib/js/swipe-datepick
 ```
 
 ```js
-$('#dateTime').date(options, confirmCallback, cancelCallback);
+$('#dateTime').date(options, confirmCallback(datetimeString), cancelCallback);
 ```
 
 ## Structure
