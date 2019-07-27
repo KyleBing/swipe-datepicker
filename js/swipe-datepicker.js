@@ -33,7 +33,7 @@
             beginminute: 0,
             endminute:59,
             curdate:false,                   // 打开日期是否定位到当前日期
-            theme:"date",                    // 控件样式（1：日期，2：日期+时间）
+            theme:"date",                    // 控件样式（1：日期 date，2：日期+时间 datetime）
             mode:null,                       // 操作模式（滑动模式）
             event:"click",                   // 打开日期插件默认方式为点击后后弹出日期
             show:true
