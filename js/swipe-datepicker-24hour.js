@@ -18,12 +18,12 @@
         let initD=parseInt(nowdate.getDate()+"");
         let initH=parseInt(nowdate.getHours());
         let initI=parseInt(nowdate.getMinutes());
-        let initS=parseInt(nowdate.getYear());
+        let initS=parseInt(nowdate.getSeconds());
         let yearScroll=null,monthScroll=null,dayScroll=null;
         let HourScroll=null,MinuteScroll=null,SecondScroll=null;
         $.fn.date.defaultOptions = {
             beginyear:2000,                 // 日期--年份开始
-            endyear:2020,                   // 日期--年份结束
+            endyear:2030,                   // 日期--年份结束
             beginmonth:1,                   // 日期--月份结束
             endmonth:12,                    // 日期--月份结束
             beginday:1,                     // 日期--日份结束
@@ -54,11 +54,11 @@
                 init_iScrll();   //初始化iscrll
                 extendOptions(); //显示控件
                 that.blur();
+                refreshDate();
                 if(datetime){
                     showdatetime();
                     refreshTime();
                 }
-                refreshDate();
                 bindButton();
             })
         }
@@ -66,7 +66,6 @@
             yearScroll.refresh();
             monthScroll.refresh();
             dayScroll.refresh();
-
             resetInitDete();
             yearScroll.scrollTo(0, initY*40, 100, true);
             monthScroll.scrollTo(0, initM*40-40, 100, true);
@@ -76,12 +75,9 @@
             HourScroll.refresh();
             MinuteScroll.refresh();
             SecondScroll.refresh();
-            // if(initH>12){    //判断当前时间是上午还是下午
-            //     SecondScroll.scrollTo(0, initD*40-40, 100, true);   //显示“下午”
-            //     initH=initH-12-1;
-            // }
             HourScroll.scrollTo(0, initH*40, 100, true);
             MinuteScroll.scrollTo(0, initI*40, 100, true);
+            SecondScroll.scrollTo(0, initS*40, 100, true);
             initH=parseInt(nowdate.getHours());
         }
         function resetIndex(){
@@ -95,6 +91,9 @@
             initY = parseInt(that.val().substr(2,2));
             initM = parseInt(that.val().substr(5,2));
             initD = parseInt(that.val().substr(8,2));
+            initH = parseInt(that.val().substr(11,2));
+            initI = parseInt(that.val().substr(14,2));
+            initS = parseInt(that.val().substr(17,2));
         }
         function bindButton(){
             resetIndex();
@@ -298,12 +297,6 @@
             }
             return str+"<li></li>";
         }
-        /*        //创建 秒 列表
-                function createSECOND_UL(){
-                    let str="<li></li>";
-                    str+="<li>上午</li><li>下午</li>";
-                    return str+"<li></li>";
-                }*/
         //创建 秒 列表
         function createSECOND_UL(){
             let str="<li></li>";

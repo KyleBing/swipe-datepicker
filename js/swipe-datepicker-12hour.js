@@ -18,12 +18,12 @@
         let initD=parseInt(nowdate.getDate()+"");
         let initH=parseInt(nowdate.getHours());
         let initI=parseInt(nowdate.getMinutes());
-        let initS=parseInt(nowdate.getYear());
+        let initS=parseInt(nowdate.getSeconds());
         let yearScroll=null,monthScroll=null,dayScroll=null;
         let HourScroll=null,MinuteScroll=null,SecondScroll=null;
         $.fn.date.defaultOptions = {
             beginyear:2000,                 // 日期--年--份开始
-            endyear:2020,                   // 日期--年--份结束
+            endyear:2030,                   // 日期--年--份结束
             beginmonth:1,                   // 日期--月--份结束
             endmonth:12,                    // 日期--月--份结束
             beginday:1,                     // 日期--日--份结束
@@ -51,11 +51,11 @@
                 init_iScrll();   //初始化iscrll
                 extendOptions(); //显示控件
                 that.blur();
+                refreshDate();
                 if(datetime){
                     showdatetime();
                     refreshTime();
                 }
-                refreshDate();
                 bindButton();
             })
         }
@@ -79,6 +79,7 @@
             }
             HourScroll.scrollTo(0, initH*40, 100, true);
             MinuteScroll.scrollTo(0, initI*40, 100, true);
+            SecondScroll.scrollTo(0, initS*40, 100, true);
             initH=parseInt(nowdate.getHours());
         }
         function resetIndex(){
@@ -92,6 +93,8 @@
             initY = parseInt(that.val().substr(2,2));
             initM = parseInt(that.val().substr(5,2));
             initD = parseInt(that.val().substr(8,2));
+            initH = parseInt(that.val().substr(11,2));
+            initI = parseInt(that.val().substr(14,2));
         }
         function bindButton(){
             resetIndex();
@@ -106,7 +109,7 @@
                         $("#Hourwrapper ul li:eq("+indexH+")").html(parseInt($("#Hourwrapper ul li:eq("+indexH+")").html().substr(0,$("#Hourwrapper ul li:eq("+indexH+")").html().length-1)))
                     }
                     datestr+=" "+$("#Hourwrapper ul li:eq("+indexH+")").html().substr(0,$("#Minutewrapper ul li:eq("+indexH+")").html().length-1)+":"+
-                        $("#Minutewrapper ul li:eq("+indexI+")").html().substr(0,$("#Minutewrapper ul li:eq("+indexI+")").html().length-1);
+                        $("#Minutewrapper ul li:eq("+indexI+")").html().substr(0,$("#Minutewrapper ul li:eq("+indexI+")").html().length-1)+':00';
                     indexS=0;
                 }
 
@@ -167,17 +170,20 @@
             HourScroll = new iScroll("Hourwrapper",{snap:"li",vScrollbar:false,
                 onScrollEnd:function () {
                     indexH = Math.round((this.y/40)*(-1))+1;
-                    HourScroll.refresh();
+                    MinuteScroll.refresh();
+                    SecondScroll.refresh();
                 }});
             MinuteScroll = new iScroll("Minutewrapper",{snap:"li",vScrollbar:false,
                 onScrollEnd:function () {
                     indexI = Math.round((this.y/40)*(-1))+1;
                     HourScroll.refresh();
+                    SecondScroll.refresh();
                 }});
             SecondScroll = new iScroll("Secondwrapper",{snap:"li",vScrollbar:false,
                 onScrollEnd:function () {
                     indexS = Math.round((this.y/40)*(-1));
                     HourScroll.refresh();
+                    MinuteScroll.refresh();
                 }})
         }
         function checkdays (year,month){
