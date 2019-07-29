@@ -8,7 +8,7 @@
 
     <script src="js/jquery-2.2.4.min.js"></script>
     <script src="js/iscroll.js"></script>
-    <script src="js/swipe-datepicker.js"></script>
+    <script src="js/swipe-datepicker-24hour.js"></script>
 
     <style>
         .container{
@@ -51,14 +51,10 @@
         endmonth:12,                    // 日期--月--份结束
         beginday:1,                     // 日期--日--份结束
         endday:31,                      // 日期--日--份结束
-        beginhour:1,
-        endhour:12,
-        beginminute: 0,
-        endminute:59,
-        curdate:false,                   // 打开日期是否定位到当前日期
-        theme:"datetime",                // 控件样式（1：日期 date，2：日期+时间 datetime）
-        mode:null,                       // 操作模式（滑动模式）
-        event:"click",                   // 打开日期插件默认方式为点击后后弹出日期
+        curdate:false,                  // 打开日期是否定位到当前日期
+        theme:"datetime",               // 控件样式（1：日期 date，2：日期+时间 datetime）
+        mode:null,                      // 操作模式（滑动模式）
+        event:"click",                  // 打开日期插件默认方式为点击后后弹出日期
         show:true
     }, (dateString)=>{
         $('#dateTime').val(dateString)
