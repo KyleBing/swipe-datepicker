@@ -12,7 +12,7 @@
         let datetime = false;
         let nowdate = new Date();
         let indexY=1,indexM=1,indexD=1;
-        let indexH=1,indexI=1,indexS=0;
+        let indexH=1,indexI=1,indexS=1;
         let initY=parseInt((nowdate.getYear()+"").substr(1,2));
         let initM=parseInt(nowdate.getMonth()+"")+1;
         let initD=parseInt(nowdate.getDate()+"");
@@ -22,22 +22,25 @@
         let yearScroll=null,monthScroll=null,dayScroll=null;
         let HourScroll=null,MinuteScroll=null,SecondScroll=null;
         $.fn.date.defaultOptions = {
-            beginyear:2000,                 // 日期--年--份开始
-            endyear:2020,                   // 日期--年--份结束
-            beginmonth:1,                   // 日期--月--份结束
-            endmonth:12,                    // 日期--月--份结束
-            beginday:1,                     // 日期--日--份结束
-            endday:31,                      // 日期--日--份结束
-            beginhour:1,
-            endhour:12,
+            beginyear:2000,                 // 日期--年份开始
+            endyear:2020,                   // 日期--年份结束
+            beginmonth:1,                   // 日期--月份结束
+            endmonth:12,                    // 日期--月份结束
+            beginday:1,                     // 日期--日份结束
+            endday:31,                      // 日期--日份结束
+            beginhour:0,
+            endhour:24,
             beginminute: 0,
             endminute:59,
+            beginsecond: 0,
+            endsecond:59,
             curdate:false,                   // 打开日期是否定位到当前日期
             theme:"date",                    // 控件样式（1：日期 date，2：日期+时间 datetime）
             mode:null,                       // 操作模式（滑动模式）
             event:"click",                   // 打开日期插件默认方式为点击后后弹出日期
             show:true
         };
+
         //用户选项覆盖插件默认选项
         let opts = $.extend( true, {}, $.fn.date.defaultOptions, options );
         if(opts.theme === "datetime"){datetime = true;}
@@ -73,10 +76,10 @@
             HourScroll.refresh();
             MinuteScroll.refresh();
             SecondScroll.refresh();
-            if(initH>12){    //判断当前时间是上午还是下午
-                SecondScroll.scrollTo(0, initD*40-40, 100, true);   //显示“下午”
-                initH=initH-12-1;
-            }
+            // if(initH>12){    //判断当前时间是上午还是下午
+            //     SecondScroll.scrollTo(0, initD*40-40, 100, true);   //显示“下午”
+            //     initH=initH-12-1;
+            // }
             HourScroll.scrollTo(0, initH*40, 100, true);
             MinuteScroll.scrollTo(0, initI*40, 100, true);
             initH=parseInt(nowdate.getHours());
@@ -100,14 +103,9 @@
                     $("#monthwrapper ul li:eq("+indexM+")").html().substr(0,$("#monthwrapper ul li:eq("+indexM+")").html().length-1)+"-"+
                     $("#daywrapper ul li:eq("+Math.round(indexD)+")").html().substr(0,$("#daywrapper ul li:eq("+Math.round(indexD)+")").html().length-1);
                 if(datetime){
-                    if(Math.round(indexS)===1){ //下午
-                        $("#Hourwrapper ul li:eq("+indexH+")").html(parseInt($("#Hourwrapper ul li:eq("+indexH+")").html().substr(0,$("#Hourwrapper ul li:eq("+indexH+")").html().length-1))+12)
-                    }else{
-                        $("#Hourwrapper ul li:eq("+indexH+")").html(parseInt($("#Hourwrapper ul li:eq("+indexH+")").html().substr(0,$("#Hourwrapper ul li:eq("+indexH+")").html().length-1)))
-                    }
                     datestr+=" "+$("#Hourwrapper ul li:eq("+indexH+")").html().substr(0,$("#Minutewrapper ul li:eq("+indexH+")").html().length-1)+":"+
-                        $("#Minutewrapper ul li:eq("+indexI+")").html().substr(0,$("#Minutewrapper ul li:eq("+indexI+")").html().length-1);
-                    indexS=0;
+                    $("#Minutewrapper ul li:eq("+indexI+")").html().substr(0,$("#Minutewrapper ul li:eq("+indexI+")").html().length-1)+":"+
+                        $("#Secondwrapper ul li:eq("+indexS+")").html().substr(0,$("#Secondwrapper ul li:eq("+indexS+")").html().length-1);
                 }
 
                 if(confirmCallback===undefined){
@@ -133,7 +131,7 @@
         //日期滑动
         function init_iScrll() {
             let strY = $("#yearwrapper ul li:eq("+indexY+")").html().substr(0,$("#yearwrapper ul li:eq("+indexY+")").html().length-1);
-            let strM = $("#monthwrapper ul li:eq("+indexM+")").html().substr(0,$("#monthwrapper ul li:eq("+indexM+")").html().length-1)
+            let strM = $("#monthwrapper ul li:eq("+indexM+")").html().substr(0,$("#monthwrapper ul li:eq("+indexM+")").html().length-1);
             yearScroll = new iScroll("yearwrapper",{snap:"li",vScrollbar:false,
                 onScrollEnd:function () {
                     indexY = (this.y/40)*(-1)+1;
@@ -167,17 +165,20 @@
             HourScroll = new iScroll("Hourwrapper",{snap:"li",vScrollbar:false,
                 onScrollEnd:function () {
                     indexH = Math.round((this.y/40)*(-1))+1;
-                    HourScroll.refresh();
+                    MinuteScroll.refresh();
+                    SecondScroll.refresh();
                 }});
             MinuteScroll = new iScroll("Minutewrapper",{snap:"li",vScrollbar:false,
                 onScrollEnd:function () {
                     indexI = Math.round((this.y/40)*(-1))+1;
                     HourScroll.refresh();
+                    SecondScroll.refresh();
                 }});
             SecondScroll = new iScroll("Secondwrapper",{snap:"li",vScrollbar:false,
                 onScrollEnd:function () {
-                    indexS = Math.round((this.y/40)*(-1));
+                    indexS = Math.round((this.y/40)*(-1))+1;
                     HourScroll.refresh();
+                    MinuteScroll.refresh();
                 }})
         }
         function checkdays (year,month){
@@ -297,10 +298,19 @@
             }
             return str+"<li></li>";
         }
-        //创建 分 列表
+/*        //创建 秒 列表
         function createSECOND_UL(){
             let str="<li></li>";
             str+="<li>上午</li><li>下午</li>";
+            return str+"<li></li>";
+        }*/
+        //创建 秒 列表
+        function createSECOND_UL(){
+            let str="<li></li>";
+            for(let i=opts.beginsecond;i<=opts.endsecond;i++){
+                i = i < 10? '0' + i: i;
+                str+='<li>'+i+'秒</li>'
+            }
             return str+"<li></li>";
         }
     }
