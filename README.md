@@ -2,7 +2,7 @@
 
 a js plugin for timepicker on mobile.
 
-online example: [Swipe Datetime Picker](http://kylebing.cn/lib/swipe-datepicker)
+online example: [Swipe Datetime Picker](https://kylebing.cn/lib/swipe-datepicker)
  
 12 hour mode
 
